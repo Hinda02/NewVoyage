@@ -84,8 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ClientController.cs" />
+    <Compile Include="Controller\ResaController.cs" />
     <Compile Include="Controller\VoyageController.cs" />
     <Compile Include="DAL\ConnexionSql.cs" />
+    <Compile Include="DAL\ManipClient.cs" />
+    <Compile Include="DAL\ManipResa.cs" />
     <Compile Include="DAL\ManipVoyage.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClientFidele.cs" />

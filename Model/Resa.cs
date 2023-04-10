@@ -10,11 +10,16 @@ namespace NewVoyage
   
     public class Resa
     {
+        private int id;
         private Voyage leVoyage;
         private Client client;
         private int nbPersonne;
         //private bool confirmation;
 
+        public Resa(int id)
+        {
+            this.id = id;
+        }
 
         public Resa(Voyage leVoyage, Client client,  int nbPersonne)
         {
@@ -35,7 +40,8 @@ namespace NewVoyage
         public Voyage LeVoyage { get => leVoyage; }
         public int NbPersonne { get => nbPersonne; set => nbPersonne = value; }
         public Client Client { get => client; set => client = value; }
-        public string Display { get => LeVoyage.Destination + "   " + LeVoyage.DateDepart + "   " + LeVoyage.DateRetour + "   " + nbPersonne; }
+        public string Display { get => LeVoyage.Destination + "   " + LeVoyage.DateDepart.ToShortDateString() + "   " + LeVoyage.DateRetour.ToShortDateString() + "   " + nbPersonne; }
+        public int Id { get => id; set => id = value; }
 
         //public bool Confirmation { get => confirmation; set => confirmation = value; }
 

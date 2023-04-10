@@ -19,13 +19,21 @@ namespace NewVoyage
         public double tauxDeReduction = 0;
         private List<Resa> reservationsClient = new List<Resa>();
 
-        public static int cptClient = Serialisation.chargerID();
-
         public Client(string nom, string prenom, int tel, string adresse, string mail)
         {
-            cptClient++;
 
-            this.id = cptClient;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.tel = tel;
+            this.adresse = adresse;
+            this.mail = mail;
+
+        }
+
+        public Client(int id, string nom, string prenom, int tel, string adresse, string mail)
+        {
+
+            this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.tel = tel;
@@ -34,13 +42,26 @@ namespace NewVoyage
             
         }
 
+        public Client(int id, string nom, string prenom, int tel, string adresse, string mail, double taux)
+        {
+
+            this.id = id;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.tel = tel;
+            this.adresse = adresse;
+            this.mail = mail;
+            this.tauxDeReduction = taux;
+
+        }
+
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
         public int Tel { get => tel; set => tel = value; }
         public string Adresse { get => adresse; set => adresse = value; }
         public string Mail { get => mail; set => mail = value; }
-        public virtual string Disp { get => Nom + "   " + Prenom + "   " + Tel; }
+        public virtual string Disp { get => Nom + "   " + Prenom + "   " + Adresse; }
         public List<Resa> ReservationsClient { get => reservationsClient; set => reservationsClient = value; }
         
 

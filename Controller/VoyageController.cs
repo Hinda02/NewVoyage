@@ -10,31 +10,22 @@ namespace NewVoyage.Controller
 {
     public class VoyageController
     {
-        //private static List<Voyage> voyageList = new List<Voyage>();
-        public static List<Voyage> getVoyages()
+        public static List<Voyage> getAll()
         {
-            MySqlDataReader reader = ManipVoyage.getVoyages();
+            List<Voyage> listVoyage = ManipVoyage.getAll();
 
-            List<Voyage> voyageList = new List<Voyage>();
+            return listVoyage;
+        }
 
-            while (reader.Read())
-            {
-                int id = (int)reader["idVoyage"];
-                string destination = (string)reader["destination"];
-                double prix = (double)reader["prix"];
-                double taxe = (double)reader["taxe"];
-                DateTime dateDep = (DateTime)reader["dateDepart"];
-                DateTime dateRet = (DateTime)reader["dateRetour"];
-                int nbPlaces = (int)reader["nbPlacesDispo"];
+        public static Voyage getById(int id)
+        { 
+            Voyage voyage = ManipVoyage.getById(id);
+            return voyage;
+        }
 
-                Voyage voyage = new Voyage(id, destination, prix, taxe, dateDep, dateRet, nbPlaces);
-
-                voyageList.Add(voyage);
-            }
-
-            reader.Close();
-
-            return voyageList;
+            public static void updateDispo(Voyage v)
+        {
+            ManipVoyage.updateDispo(v);
         }
     }
 }

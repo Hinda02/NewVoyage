@@ -9,10 +9,11 @@ namespace NewVoyage
 
      public class ClientFidele : Client
     {
+        //private double tauxDeReduction = 0;
         public override string Disp { get => base.Disp + "   " + TauxDeReduction + "%"; }
 
-        public ClientFidele(string nom, string prenom, int tel, string adresse, string mail, double tauxDeReduction) 
-            :base(nom, prenom, tel, adresse, mail)
+        public ClientFidele(int id, string nom, string prenom, int tel, string adresse, string mail, double tauxDeReduction) 
+            :base(id, nom, prenom, tel, adresse, mail)
         {
             this.tauxDeReduction = tauxDeReduction;
         }

@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data.SqlClient;
 using NewVoyage.Controller;
+using MySqlX.XDevAPI;
 
 namespace NewVoyage
 {
@@ -28,7 +29,7 @@ namespace NewVoyage
             InitializeComponent();
 
 
-            listVoyage = VoyageController.getVoyages();
+            listVoyage = VoyageController.getAll();
             
             lDestination.DataSource = listVoyage;
             lDestination.DisplayMember = "Destination";
@@ -49,19 +50,21 @@ namespace NewVoyage
             Voyage v = listVoyage[i];
 
             //affichage des infos du voyage
-            lblDateD.Text = v.DateDepart.ToString();
-            lblDateR.Text = v.DateRetour.ToString();
+            lblDateD.Text = v.DateDepart.ToShortDateString();
+            lblDateR.Text = v.DateRetour.ToShortDateString();
             lblPrix.Text = v.Prix.ToString();
             lblTaxe.Text = v.Taxe.ToString();
             lblPlDispo.Text = v.NbPlacesDispos.ToString();
 
-            lReservations.Items.Clear();
+            //lReservations.Items.Clear();
+            lReservations.DataSource = ResaController.getByIdV(v);
+            lReservations.DisplayMember = "Display";
 
             //afficher les reservations liees a cette destination
-            for (int k = 0; k <= v.LReservations.Count - 1; k++)
+            /*for (int k = 0; k <= v.LReservations.Count - 1; k++)
             {
                 lReservations.Items.Add(v.LReservations[k].afficher());
-            }
+            }*/
 
             //gerer l'affichage du bouton reserver
             if (v.NbPlacesDispos > 0)

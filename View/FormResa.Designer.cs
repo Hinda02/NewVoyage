@@ -197,6 +197,7 @@
             this.lbClients.Name = "lbClients";
             this.lbClients.Size = new System.Drawing.Size(297, 166);
             this.lbClients.TabIndex = 20;
+            this.lbClients.SelectedIndexChanged += new System.EventHandler(this.lbClients_SelectedIndexChanged);
             this.lbClients.DoubleClick += new System.EventHandler(this.lbClients_DoubleClick);
             // 
             // groupBox2

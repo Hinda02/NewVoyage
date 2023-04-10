@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewVoyage.Controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,7 +29,7 @@ namespace NewVoyage
             tbAdresse.Text = client.Adresse;
             tbMail.Text = client.Mail;
 
-            lResa.DataSource = client.ReservationsClient;
+            lResa.DataSource = ResaController.getByIdC(client);
             lResa.DisplayMember = "Display";
 
             
@@ -46,11 +47,13 @@ namespace NewVoyage
         /// <param name="e"></param>
         private void btnModifier_Click(object sender, EventArgs e)
         {
-            cli.Nom = tbNom.Text;
+            /*cli.Nom = tbNom.Text;
             cli.Prenom = tbPrenom.Text;
             cli.Tel = int.Parse(tbTel.Text);
             cli.Adresse = tbAdresse.Text;
-            cli.Mail = tbMail.Text;
+            cli.Mail = tbMail.Text;*/
+
+            ClientController.updateClient(cli, tbNom.Text, tbPrenom.Text, int.Parse(tbTel.Text), tbAdresse.Text, tbMail.Text);
 
         }
     }

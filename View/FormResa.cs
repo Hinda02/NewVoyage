@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NewVoyage.Controller;
+using NewVoyage.DAL;
 
 namespace NewVoyage
 {
@@ -17,17 +19,13 @@ namespace NewVoyage
 
         private Voyage v;
 
-        private Client cli1;
-        private Client cli2;
-        private Client cli3;
-
-        private List<Client> clients = new List<Client>();
+        //private List<Client> clients = ClientController.getAll();
 
         private int nbPers = 0;
         private Client selectedClient;
 
-        private List<Client> client = new List<Client>();
-        private List<Client> clientFidele = new List<Client>();
+        //private List<Client> client = ClientController.getClients();
+        //private List<ClientFidele> clientFidele = ClientController.getClientsFideles();
 
         public FormResa(Voyage voyage)//constructeur attend un argument
         {
@@ -38,38 +36,12 @@ namespace NewVoyage
 
             v = voyage;
 
-            //charger la liste clients
-            //clients = Serialisation.chargerClients();
-
-            //cli1 = new ClientFidele("lorem", "ipsum", 0147896352, "loremAdresse", "lorem@mail.com", 15);
-            //cli2 = new ClientFidele("dolor", "sit", 0112345652, "dolorAdresse", "dolor@mail.com", 30);
-            //cli3 = new ClientFidele("amet", "ipsum", 0147456123, "ametAdresse", "amet@mail.com", 10);
-
-            //clients.Add(cli1);
-            //clients.Add(cli2);
-            //clients.Add(cli3);
-
-            //trier les clients dans 2 listes selon qu'ils soient fideles ou pas
-            foreach (Client cli in clients)
-            {
-                bool verif = cli.GetType() == typeof(ClientFidele);
-
-                if (verif)
-                {
-                    clientFidele.Add(cli);
-                }
-                else
-                {
-                    client.Add(cli);
-                }
-            }
-
         }
 
         //ajouter un nombre de places à reserver
         private void btnNbPers_Click(object sender, EventArgs e)
         {
-            try//implement this in the right place
+            try//implement this in the right place (done)
             {
                 selectedClient = (Client)lbClients.SelectedItem;
             }
@@ -120,27 +92,27 @@ namespace NewVoyage
 
             reservation1 = new Resa(v, selectedClient, nbPers);
             reservation1.confirmeResa();
-            reservation1.LeVoyage.ajouterReservation(reservation1);
-            reservation1.Client.ajouterReservation(reservation1);
+            VoyageController.updateDispo(reservation1.LeVoyage);
+            ResaController.addResa(reservation1.LeVoyage.Id, reservation1.Client.Id, reservation1.NbPersonne);
+            //reservation1.LeVoyage.ajouterReservation(reservation1);
+            //reservation1.Client.ajouterReservation(reservation1);
 
             //client devient client fidele au bout de 6 reservations
-            if(reservation1.Client.ReservationsClient.Count() >= 6)
+            /*if(reservation1.Client.ReservationsClient.Count() >= 6)
             {
-                Client nvoCliF = new ClientFidele(selectedClient.Nom, selectedClient.Prenom, selectedClient.Tel, selectedClient.Adresse, selectedClient.Mail, 5);
+                Client nvoCliF = new ClientFidele(selectedClient.Id, selectedClient.Nom, selectedClient.Prenom, selectedClient.Tel, selectedClient.Adresse, selectedClient.Mail, 5);
                 nvoCliF.Id = selectedClient.Id;
                 nvoCliF.ReservationsClient = selectedClient.ReservationsClient;
-                clients.Add(nvoCliF);
-                clients.Remove(selectedClient);
-            }
+                //clients.Add(nvoCliF);
+                //clients.Remove(selectedClient);
+            }*/
 
-            //Serialisation.sauvegarderClients(clients);
 
             this.Close();
         }
 
         private void btnAnnuler_Click(object sender, EventArgs e)
         {
-            //Serialisation.sauvegarderClients(clients);
             this.Close();
         }
 
@@ -164,16 +136,7 @@ namespace NewVoyage
                     throw new Exception();
                 }
 
-                Client temp = new Client(nom, prenom, tel, adresse, mail);
-                //Serialisation.sauvegarderID(temp.Id);
-
-                clients.Add(temp);
-                //Serialisation.sauvegarderClients(clients);
-                //clients = Serialisation.chargerClients();
-
-                lbClients.DataSource = null;
-                lbClients.DataSource = clients;
-                lbClients.DisplayMember = "Disp";
+                ClientController.addClient(nom, prenom, tel, adresse, mail);
 
             }
             catch (Exception)
@@ -191,6 +154,9 @@ namespace NewVoyage
         /// <param name="e"></param>
         private void btnTypeCli_Click(object sender, EventArgs e)
         {
+            List<Client> clients = ClientController.getAll();
+            List<Client> client = ClientController.getClients();
+            List<ClientFidele> clientFidele = ClientController.getClientsFideles();
 
             if (cbClient.Checked && cbCFidele.Checked)
             {
@@ -231,6 +197,9 @@ namespace NewVoyage
 
         }
 
+        private void lbClients_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
